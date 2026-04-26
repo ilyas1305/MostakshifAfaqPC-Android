@@ -23,6 +23,8 @@ class MainActivity : AppCompatActivity() {
         ws.domStorageEnabled = true
         ws.allowFileAccess = true
         ws.allowContentAccess = true
+        ws.allowFileAccessFromFileURLs = true
+        ws.allowUniversalAccessFromFileURLs = true
         ws.useWideViewPort = true
         ws.loadWithOverviewMode = true
 

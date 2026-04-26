@@ -137,6 +137,24 @@ html, body { margin: 0; padding: 0; font-family: 'Cairo', system-ui, -apple-syst
       <div class="card" id="quiz-card">
         <h2>1) اختبار الميولات المهنية</h2>
         <p class="help">اختر العبارات التي تُشبهك. يمكنك اختيار أكثر من عبارة.</p>
+        <div class="card" style="padding:12px; margin-top:8px;">
+          <h3>المسلك الدراسي (البكالوريا)</h3>
+          <select id="sel-fil" style="width:100%; padding:8px; border-radius:8px; background:#0b1220; color:#e2e8f0; border:1px solid rgba(255,255,255,0.2);">
+            <option value="">— اختر المسلك —</option>
+            <option value="SMA">SMA — علوم رياضية أ</option>
+            <option value="SMB">SMB — علوم رياضية ب</option>
+            <option value="SP">SP — علوم فيزيائية</option>
+            <option value="SVT">SVT — علوم الحياة والأرض</option>
+            <option value="STE">STE — علوم وتكنولوجيات كهربائية</option>
+            <option value="STM">STM — علوم وتكنولوجيات ميكانيكية</option>
+            <option value="SE">SE — علوم اقتصادية</option>
+            <option value="TGC">TGC — تقني في تسيير المحاسبات</option>
+            <option value="LET">Lettres — آداب</option>
+            <option value="ART">Arts — فنون</option>
+            <option value="PRO">Bac Pro — مهني</option>
+          </select>
+          <div class="help">اختر مسلكك الحالي لتحسين دقة الأهلية.</div>
+        </div>
         <div class="quiz-list" id="quiz-list">
           <!-- Filled by JS -->
         </div>
@@ -221,58 +239,28 @@ html, body { margin: 0; padding: 0; font-family: 'Cairo', system-ui, -apple-syst
 
 <script>
 // ====== Data ======
-const CATS = {
-  cpge: { key:'cpge', name:'الأقسام التحضيرية للمدارس العليا (CPGE)', badge:'cat-cpge', note:'مسار مكثف لسنتين (MP/PSI) للولوج لأفضل مدارس المهندسين', tags:['وتيرة عالية','رياضيات قوية','فرنسية'], schools:[
-    { name:'مراكز CPGE العمومية', city:'متعددة', majors:['MPSI/PCSI ثم MP/PSI'], note:'ولوج مدارس المهندسين المغربية والفرنسية بعد السنتين' }
-  ], faculties:[] },
-  eng: { key:'eng', name:'المدارس العليا للمهندسين', badge:'cat-eng', note:'ولوج مباشر بعد الباك أو بعد CPGE/DUT/DEUG', tags:['هندسة مدنية','كهرباء/إلكترونيك','طاقة/ماء'], schools:[
-    { name:'EMI — المدرسة المحمدية للمهندسين', city:'الرباط', majors:['ميكانيك','كهرباء','معلوميات'], note:'Concours وعتبة عالية', url:'https://www.emi.ac.ma/' },
-    { name:'EHTP — المدرسة الحسنية للأشغال العمومية', city:'الدار البيضاء', majors:['مدني','ماء','بيئة'], note:'Concours وملف', url:'https://www.ehtp.ac.ma/' },
-    { name:'ENSAM', city:'الدار البيضاء · مكناس', majors:['صناعة ميكانيكية','إلكترونيك'], note:'مسار 5 سنوات', url:'https://www.ensam-casa.ma/' },
-    { name:'ENSA (شبكة وطنية)', city:'مدن متعددة', majors:['حاسبات','شبكات','طاقة','مدني'], note:'ولوج مباشر + مسالك متنوعة' },
-    { name:'ENSMR — المدرسة الوطنية العليا للمناجم', city:'الرباط', majors:['معادن ومواد','طاقات','جيوتقنية'], note:'انتقائي', url:'https://www.ensmr.ac.ma/' }
-  ], faculties:[] },
-  it: { key:'it', name:'المعلوميات و الذكاء الاصطناعي و البيانات', badge:'cat-it', note:'مسارات تقنية سريعة النمو وسوق شغل قوي', tags:['برمجة','ذكاء اصطناعي','أمن سيبراني'], schools:[
-    { name:'ENSIAS', city:'الرباط', majors:['ذكاء اصطناعي','هندسة برمجيات','أمن'], note:'', url:'https://ensias.um5.ac.ma/' },
-    { name:'INPT', city:'الرباط', majors:['شبكات','اتصالات','أمن'], note:'', url:'https://www.inpt.ac.ma/' },
-    { name:'INSEA', city:'الرباط', majors:['إحصاء','بيانات','اقتصاد قياسي'], note:'', url:'https://www.insea.ac.ma/' },
-    { name:'ENSA (شبكة وطنية)', city:'مدن متعددة', majors:['Informatique','Réseaux','Data'], note:'' }
-  ], faculties:[
-    { name:'FST — كليات العلوم والتقنيات', city:'مدن متعددة', majors:['Informatique','Réseaux','Data Science'], note:'LMD' },
-    { name:'FS — كليات العلوم', city:'مدن متعددة', majors:['Informatique','Math-Info'], note:'LMD' }
-  ] },
-  med: { key:'med', name:'كليات الطب والصيدلة وطب الأسنان (FMP)', badge:'cat-med', note:'مسار طويل وانتقائي يتطلب معدل مرتفع', tags:['7 سنوات','فرنسية','ضغط عالٍ'], schools:[], faculties:[
-    { name:'FMP — الطب العام', city:'الرباط · الدار البيضاء · مراكش · فاس · وجدة · طنجة · أكادير', majors:['طب عام ثم تخصصات'], note:'' },
-    { name:'الصيدلة', city:'مدن مختارة', majors:['صناعة دوائية','صيدلة إكلينيكية'], note:'' },
-    { name:'طب الأسنان', city:'الرباط · الدار البيضاء · فاس · وجدة · مراكش', majors:['جراحة الفم','تقويم','ترميم'], note:'' }
-  ] },
-  fst: { key:'fst', name:'علوم أساسية وتطبيقية (FST/FS) — LMD', badge:'cat-fst', note:'Licence ثم Master/Doctorat أو إدماج في الصناعة', tags:['بحث علمي','مختبر','تدريس'], schools:[], faculties:[
-    { name:'FSTM — FST المحمدية', city:'المحمدية', majors:['فيزياء','كيمياء','رياضيات','علوم المادة','علوم الأرض','طاقات متجددة'], note:'', url:'https://www.fstm.ac.ma/' },
-    { name:'FSTG — FST مراكش', city:'مراكش', majors:['فيزياء','كيمياء','رياضيات','علوم المهندس'], note:'', url:'https://www.fstg-marrakech.ac.ma/' },
-    { name:'FSTT — FST طنجة', city:'طنجة', majors:['فيزياء','كيمياء','رياضيات','معلوميات'], note:'', url:'https://www.fstt.ac.ma/' },
-    { name:'FSTS — FST سطات', city:'سطات', majors:['فيزياء','كيمياء','رياضيات','مهن العلوم'], note:'', url:'https://www.fsts.ac.ma/' },
-    { name:'FSTBM — FST بني ملال', city:'بني ملال', majors:['فيزياء','كيمياء','رياضيات','بيئة'], note:'', url:'https://www.fstbm.ac.ma/' },
-    { name:'FS (كليات العلوم)', city:'مدن متعددة', majors:['فيزياء تطبيقية','كيمياء تحليلية','رياضيات تطبيقية','علوم الجينوم','جيولوجيا'], note:'' }
-  ] },
-  bus: { key:'bus', name:'التسيير والتجارة (ENCG/ISCAE)', badge:'cat-bus', note:'ولوج عبر Concours بعد الباك، مفتوح لمسالك علمية', tags:['تسيير','محاسبة','تسويق'], schools:[
-    { name:'ENCG (شبكة وطنية)', city:'مدن متعددة', majors:['تدبير','مالية','تسويق','تجارة'], note:'' },
-    { name:'ISCAE', city:'الدار البيضاء · الرباط', majors:['تسيير','مالية','تدقيق'], note:'', url:'https://www.iscae.ma/' }
-  ], faculties:[
-    { name:'FSJES — كليات الحقوق والاقتصاد', city:'مدن متعددة', majors:['اقتصاد','تدبير','مالية','تحليل بيانات الأعمال'], note:'LMD' }
-  ] },
-  short: { key:'short', name:'مسارات قصيرة (BTS / DUT / EST)', badge:'cat-fst', note:'تكوين تطبيقي قصير (سنتان Bac+2) للاندماج السريع أو الولوج الموازي', tags:['تقني متخصص','تطبيقي','اندماج سريع'], schools:[
-    { name:'EST — المدارس العليا للتكنولوجيا (شبكة وطنية)', city:'مدن متعددة', majors:['صناعة ميكانيكية','كهرباء صناعية','شبكات وأنظمة','صيانة','جودة'], note:'Diplôme DUT' },
-    { name:'BTS — مراكز شهادة التقني العالي', city:'مدن متعددة', majors:['محاسبة','إلكترونيك','صيانة ميكانيكية','معلوميات مكتبية'], note:'ولوج عبر انتقاء و مباراة' },
-  ], faculties:[] },
-  priv: { key:'priv', name:'جامعات خاصة/شبه عمومية', badge:'cat-it', note:'مسارات متميزة برسوم ومع منح محدودة، انتقاء وملف', tags:['منح','رسوم','تعليم خاص'], schools:[
-    { name:'UM6P — جامعة محمد السادس متعددة التخصصات', city:'بن جرير · الرباط', majors:['هندسة','علوم البيانات','طاقات'], note:'منح انتقائية', url:'https://www.um6p.ma/' },
-    { name:'UIR — الجامعة الدولية بالرباط', city:'الرباط', majors:['هندسة','اتصالات','تسيير'], note:'رسوم ومنح', url:'https://www.uir.ac.ma/' },
-    { name:'AUI — جامعة الأخوين', city:'إفران', majors:['Computer Science','Engineering & Management'], note:'رسوم ومنح', url:'https://www.aui.ma/' },
-    { name:'UIC — الجامعة الدولية بالدار البيضاء', city:'الدار البيضاء', majors:['هندسة','تسيير','علوم صحية'], note:'رسوم ومنح', url:'https://www.uic.ac.ma/' },
-    { name:'UPF — الجامعة الخاصة بفاس', city:'فاس', majors:['هندسة','تسيير','صحة'], note:'رسوم ومنح', url:'https://www.upf.ac.ma/' },
-    { name:'UIZ — جامعة ابن زهر (عمومية)', city:'أكادير', majors:['علوم','تقنيات','اقتصاد'], note:'جامعة عمومية جهوية', url:'https://www.uiz.ac.ma/' }
-  ], faculties:[] }
-};
+let CATS = {};
+async function loadData(){
+  try{
+    const res = await fetch('data/pathways.json');
+    if(res.ok){
+      const json = await res.json();
+      CATS = json.categories || {};
+      return;
+    }
+  }catch(_){}
+  try{
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET','data/pathways.json', false);
+    xhr.send(null);
+    if(xhr.status===200){
+      var json = JSON.parse(xhr.responseText);
+      CATS = json.categories || {};
+      return;
+    }
+  }catch(_){ }
+  console.error('فشل تحميل بيانات المسارات من JSON');
+}
 
 const QUIZ = [
   { id:'q1', text:'أحب حل المسائل الرياضية المعقدة.', add:['cpge','eng','it','fst'] },
@@ -318,17 +306,11 @@ function compute(){
     adds.forEach(k => weights[k] += 1);
   });
   // Advanced weighting
-  const fr = (document.getElementById('sel-fr')?.value)||'';
-  const en = (document.getElementById('sel-en')?.value)||'';
-  const gpa = parseFloat((document.getElementById('inp-gpa')?.value)||'');
-  const fav = {
-    physics: !!document.getElementById('fav-physics')?.checked,
-    math: !!document.getElementById('fav-math')?.checked,
-    chem: !!document.getElementById('fav-chem')?.checked,
-    bio: !!document.getElementById('fav-bio')?.checked,
-    cs: !!document.getElementById('fav-cs')?.checked,
-    econ: !!document.getElementById('fav-econ')?.checked,
-  };
+  const inputs = getInputs();
+  const fr = inputs.fr;
+  const en = inputs.en;
+  const gpa = inputs.gpa;
+  const fav = inputs.fav;
 
   // Language influence
   if(fr==='strong'){ weights.cpge+=2; weights.med+=2; weights.eng+=1; weights.it+=1; weights.fst+=1; }
@@ -353,20 +335,65 @@ function compute(){
   if(fav.bio){ weights.med+=1; weights.fst+=1; }
   if(fav.cs){ weights.it+=2; weights.eng+=1; }
   if(fav.econ){ weights.bus+=2; }
+  // ensure all categories exist
+  Object.keys(CATS||{}).forEach(k=>{ if(!(k in weights)) weights[k]=0; });
   return weights;
+}
+
+function getInputs(){
+  const fr = (document.getElementById('sel-fr')?.value)||'';
+  const en = (document.getElementById('sel-en')?.value)||'';
+  const gpa = parseFloat((document.getElementById('inp-gpa')?.value)||'');
+  const fil = (document.getElementById('sel-fil')?.value)||'';
+  const fav = {
+    physics: !!document.getElementById('fav-physics')?.checked,
+    math: !!document.getElementById('fav-math')?.checked,
+    chem: !!document.getElementById('fav-chem')?.checked,
+    bio: !!document.getElementById('fav-bio')?.checked,
+    cs: !!document.getElementById('fav-cs')?.checked,
+    econ: !!document.getElementById('fav-econ')?.checked,
+  };
+  return { fr, en, gpa, fil, fav };
+}
+
+function levelValue(l){
+  const map = { '':0, weak:1, medium:2, strong:3 };
+  return map[l]||0;
+}
+
+function isEligible(k, inputs){
+  const cat = CATS[k];
+  if(!cat) return { eligible: true, reasons: [] };
+  const el = cat.eligibility || {};
+  const reasons = [];
+  if(el.filiereAllowed && el.filiereAllowed.length && inputs.fil){
+    if(!el.filiereAllowed.includes(inputs.fil)) reasons.push('غير مخصص لمسلكك');
+  }
+  if(typeof el.minGPA === 'number' && !isNaN(inputs.gpa)){
+    if(inputs.gpa < el.minGPA) reasons.push(`يتطلب معدل ≥ ${el.minGPA}`);
+  }
+  if(el.minFr){
+    if(levelValue(inputs.fr) < levelValue(el.minFr)) reasons.push('يتطلب فرنسية أعلى');
+  }
+  if(el.minEn){
+    if(levelValue(inputs.en) < levelValue(el.minEn)) reasons.push('يتطلب إنجليزية أعلى');
+  }
+  return { eligible: reasons.length===0, reasons };
 }
 
 function pct(v, max){ return max? Math.round((v/max)*100) : 0; }
 
-function renderResults(weights){
+function renderResults(weights, inputs){
   const vals = Object.entries(weights);
   const maxv = Math.max(1, ...vals.map(v=>v[1]));
   const sorted = vals.sort((a,b)=>b[1]-a[1]);
+  const eligible = sorted.filter(([k])=> isEligible(k, inputs).eligible);
+  const list = eligible.length ? eligible : sorted;
   // KPIs
-  const t1 = CATS[sorted[0][0]].name; const t2 = CATS[sorted[1][0]].name; const t3 = CATS[sorted[2][0]].name;
-  document.getElementById('kpi-top1').textContent = t1;
-  document.getElementById('kpi-top2').textContent = t2;
-  document.getElementById('kpi-top3').textContent = t3;
+  const topNames = [0,1,2].map(i => list[i] ? (CATS[list[i][0]]?.name||'—') : '—');
+  document.getElementById('kpi-top1').textContent = topNames[0];
+  document.getElementById('kpi-top2').textContent = topNames[1];
+  document.getElementById('kpi-top3').textContent = topNames[2];
   document.getElementById('results-empty').classList.add('hidden');
   document.getElementById('results').classList.remove('hidden');
   // Bars
@@ -374,11 +401,12 @@ function renderResults(weights){
   bars.innerHTML = '';
   sorted.forEach(([k,v])=>{
     const cat = CATS[k];
+    const eg = isEligible(k, inputs);
     const row = document.createElement('div');
     row.style.margin = '8px 0';
     row.innerHTML = `<div style="display:flex;align-items:center;gap:8px;">
       <span class="badge-cat ${cat.badge}">${cat.name}</span>
-      <span class="small">${v} / ${maxv}</span>
+      <span class="small">${v} / ${maxv} ${eg.eligible ? '' : '<span style="color:#f87171">— غير مؤهل</span>'}</span>
     </div>
     <div class="bar" aria-hidden="true"><span style="width:${pct(v,maxv)}%"></span></div>`;
     bars.appendChild(row);
@@ -387,11 +415,13 @@ function renderResults(weights){
 
 function toggleBody(el){ const b = el.nextElementSibling; b.style.display = (b.style.display==='block'?'none':'block'); }
 
-function renderPathways(weights){
+function renderPathways(weights, inputs){
   const host = document.getElementById('pathways');
   host.innerHTML = '';
   const sortedKeys = Object.keys(weights).sort((a,b)=>weights[b]-weights[a]);
-  sortedKeys.forEach(key => {
+  const onlyEligible = sortedKeys.filter(k=> isEligible(k, inputs).eligible);
+  const keys = onlyEligible.length ? onlyEligible : sortedKeys;
+  keys.forEach(key => {
     const cat = CATS[key];
     const sec = document.createElement('section');
     sec.className = 'pathway';
@@ -442,14 +472,15 @@ function renderPathways(weights){
 }
 
 // ====== Events ======
-buildQuiz();
 let LAST_WEIGHTS = null;
+let LAST_INPUTS = null;
 
 document.getElementById('btn-run').addEventListener('click', ()=>{
   const w = compute();
   LAST_WEIGHTS = w;
-  renderResults(w);
-  renderPathways(w);
+  LAST_INPUTS = getInputs();
+  renderResults(w, LAST_INPUTS);
+  renderPathways(w, LAST_INPUTS);
 });
 
 document.getElementById('btn-reset').addEventListener('click', ()=>{
@@ -459,6 +490,8 @@ document.getElementById('btn-reset').addEventListener('click', ()=>{
   document.getElementById('pathways').innerHTML = '';
   const cf = document.getElementById('city-filter'); if(cf) cf.value = '';
   LAST_WEIGHTS = null;
+  const filSel = document.getElementById('sel-fil'); if(filSel) filSel.value = '';
+  LAST_INPUTS = null;
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
@@ -467,14 +500,22 @@ document.getElementById('btn-print').addEventListener('click', ()=> window.print
 // Filter controls
 document.getElementById('btn-apply-filter').addEventListener('click', ()=>{
   if(!LAST_WEIGHTS) LAST_WEIGHTS = compute();
-  renderPathways(LAST_WEIGHTS);
+  if(!LAST_INPUTS) LAST_INPUTS = getInputs();
+  renderPathways(LAST_WEIGHTS, LAST_INPUTS);
 });
 document.getElementById('city-filter').addEventListener('keyup', (e)=>{
   if(e.key === 'Enter'){
     if(!LAST_WEIGHTS) LAST_WEIGHTS = compute();
-    renderPathways(LAST_WEIGHTS);
+    if(!LAST_INPUTS) LAST_INPUTS = getInputs();
+    renderPathways(LAST_WEIGHTS, LAST_INPUTS);
   }
 });
+
+async function init(){
+  await loadData();
+  buildQuiz();
+}
+init();
 </script>
 </body>
 </html>

@@ -1,0 +1,153 @@
+{
+  "categories": {
+    "cpge": {
+      "key": "cpge",
+      "name": "الأقسام التحضيرية للمدارس العليا (CPGE)",
+      "badge": "cat-cpge",
+      "note": "مسار مكثف لسنتين (MP/PSI) للولوج لأفضل مدارس المهندسين",
+      "tags": ["وتيرة عالية", "رياضيات قوية", "فرنسية"],
+      "eligibility": {
+        "filiereAllowed": ["SMA", "SMB", "SP"],
+        "minGPA": 15,
+        "minFr": "medium"
+      },
+      "schools": [
+        {
+          "name": "مراكز CPGE العمومية",
+          "city": "متعددة",
+          "majors": ["MPSI/PCSI ثم MP/PSI"],
+          "note": "ولوج مدارس المهندسين المغربية والفرنسية بعد السنتين"
+        }
+      ],
+      "faculties": []
+    },
+    "eng": {
+      "key": "eng",
+      "name": "المدارس العليا للمهندسين",
+      "badge": "cat-eng",
+      "note": "ولوج مباشر بعد الباك أو بعد CPGE/DUT/DEUG",
+      "tags": ["هندسة مدنية", "كهرباء/إلكترونيك", "طاقة/ماء"],
+      "eligibility": {
+        "filiereAllowed": ["SMA", "SMB", "SP", "STE", "STM"],
+        "minGPA": 12
+      },
+      "schools": [
+        {"name": "EMI — المدرسة المحمدية للمهندسين", "city": "الرباط", "majors": ["ميكانيك", "كهرباء", "معلوميات"], "note": "Concours وعتبة عالية", "url": "https://www.emi.ac.ma/"},
+        {"name": "EHTP — المدرسة الحسنية للأشغال العمومية", "city": "الدار البيضاء", "majors": ["مدني", "ماء", "بيئة"], "note": "Concours وملف", "url": "https://www.ehtp.ac.ma/"},
+        {"name": "ENSAM", "city": "الدار البيضاء · مكناس", "majors": ["صناعة ميكانيكية", "إلكترونيك"], "note": "مسار 5 سنوات", "url": "https://www.ensam-casa.ma/"},
+        {"name": "ENSA (شبكة وطنية)", "city": "مدن متعددة", "majors": ["حاسبات", "شبكات", "طاقة", "مدني"], "note": "ولوج مباشر + مسالك متنوعة"},
+        {"name": "ENSMR — المدرسة الوطنية العليا للمناجم", "city": "الرباط", "majors": ["معادن ومواد", "طاقات", "جيوتقنية"], "note": "انتقائي", "url": "https://www.ensmr.ac.ma/"}
+      ],
+      "faculties": []
+    },
+    "it": {
+      "key": "it",
+      "name": "المعلوميات و الذكاء الاصطناعي و البيانات",
+      "badge": "cat-it",
+      "note": "مسارات تقنية سريعة النمو وسوق شغل قوي",
+      "tags": ["برمجة", "ذكاء اصطناعي", "أمن سيبراني"],
+      "eligibility": {
+        "filiereAllowed": ["SMA", "SMB", "SP", "STE", "STM", "SE", "TGC", "PRO"],
+        "minEn": "weak"
+      },
+      "schools": [
+        {"name": "ENSIAS", "city": "الرباط", "majors": ["ذكاء اصطناعي", "هندسة برمجيات", "أمن"], "note": "", "url": "https://ensias.um5.ac.ma/"},
+        {"name": "INPT", "city": "الرباط", "majors": ["شبكات", "اتصالات", "أمن"], "note": "", "url": "https://www.inpt.ac.ma/"},
+        {"name": "INSEA", "city": "الرباط", "majors": ["إحصاء", "بيانات", "اقتصاد قياسي"], "note": "", "url": "https://www.insea.ac.ma/"},
+        {"name": "ENSA (شبكة وطنية)", "city": "مدن متعددة", "majors": ["Informatique", "Réseaux", "Data"], "note": ""}
+      ],
+      "faculties": [
+        {"name": "FST — كليات العلوم والتقنيات", "city": "مدن متعددة", "majors": ["Informatique", "Réseaux", "Data Science"], "note": "LMD"},
+        {"name": "FS — كليات العلوم", "city": "مدن متعددة", "majors": ["Informatique", "Math-Info"], "note": "LMD"}
+      ]
+    },
+    "med": {
+      "key": "med",
+      "name": "كليات الطب والصيدلة وطب الأسنان (FMP)",
+      "badge": "cat-med",
+      "note": "مسار طويل وانتقائي يتطلب معدل مرتفع",
+      "tags": ["7 سنوات", "فرنسية", "ضغط عالٍ"],
+      "eligibility": {
+        "filiereAllowed": ["SP", "SVT"],
+        "minGPA": 16,
+        "minFr": "medium"
+      },
+      "schools": [],
+      "faculties": [
+        {"name": "FMP — الطب العام", "city": "الرباط · الدار البيضاء · مراكش · فاس · وجدة · طنجة · أكادير", "majors": ["طب عام ثم تخصصات"], "note": ""},
+        {"name": "الصيدلة", "city": "مدن مختارة", "majors": ["صناعة دوائية", "صيدلة إكلينيكية"], "note": ""},
+        {"name": "طب الأسنان", "city": "الرباط · الدار البيضاء · فاس · وجدة · مراكش", "majors": ["جراحة الفم", "تقويم", "ترميم"], "note": ""}
+      ]
+    },
+    "fst": {
+      "key": "fst",
+      "name": "علوم أساسية وتطبيقية (FST/FS) — LMD",
+      "badge": "cat-fst",
+      "note": "Licence ثم Master/Doctorat أو إدماج في الصناعة",
+      "tags": ["بحث علمي", "مختبر", "تدريس"],
+      "eligibility": {
+        "filiereAllowed": ["SMA", "SMB", "SP", "SVT"]
+      },
+      "schools": [],
+      "faculties": [
+        {"name": "FSTM — FST المحمدية", "city": "المحمدية", "majors": ["فيزياء", "كيمياء", "رياضيات", "علوم المادة", "علوم الأرض", "طاقات متجددة"], "note": "", "url": "https://www.fstm.ac.ma/"},
+        {"name": "FSTG — FST مراكش", "city": "مراكش", "majors": ["فيزياء", "كيمياء", "رياضيات", "علوم المهندس"], "note": "", "url": "https://www.fstg-marrakech.ac.ma/"},
+        {"name": "FSTT — FST طنجة", "city": "طنجة", "majors": ["فيزياء", "كيمياء", "رياضيات", "معلوميات"], "note": "", "url": "https://www.fstt.ac.ma/"},
+        {"name": "FSTS — FST سطات", "city": "سطات", "majors": ["فيزياء", "كيمياء", "رياضيات", "مهن العلوم"], "note": "", "url": "https://www.fsts.ac.ma/"},
+        {"name": "FSTBM — FST بني ملال", "city": "بني ملال", "majors": ["فيزياء", "كيمياء", "رياضيات", "بيئة"], "note": "", "url": "https://www.fstbm.ac.ma/"},
+        {"name": "FS (كليات العلوم)", "city": "مدن متعددة", "majors": ["فيزياء تطبيقية", "كيمياء تحليلية", "رياضيات تطبيقية", "علوم الجينوم", "جيولوجيا"], "note": ""}
+      ]
+    },
+    "bus": {
+      "key": "bus",
+      "name": "التسيير والتجارة (ENCG/ISCAE)",
+      "badge": "cat-bus",
+      "note": "ولوج عبر Concours بعد الباك، مفتوح لمسالك علمية",
+      "tags": ["تسيير", "محاسبة", "تسويق"],
+      "eligibility": {
+        "filiereAllowed": ["SE", "TGC", "SMA", "SMB", "SP", "SVT"]
+      },
+      "schools": [
+        {"name": "ENCG (شبكة وطنية)", "city": "مدن متعددة", "majors": ["تدبير", "مالية", "تسويق", "تجارة"], "note": ""},
+        {"name": "ISCAE", "city": "الدار البيضاء · الرباط", "majors": ["تسيير", "مالية", "تدقيق"], "note": "", "url": "https://www.iscae.ma/"}
+      ],
+      "faculties": [
+        {"name": "FSJES — كليات الحقوق والاقتصاد", "city": "مدن متعددة", "majors": ["اقتصاد", "تدبير", "مالية", "تحليل بيانات الأعمال"], "note": "LMD"}
+      ]
+    },
+    "short": {
+      "key": "short",
+      "name": "مسارات قصيرة (BTS / DUT / EST)",
+      "badge": "cat-fst",
+      "note": "تكوين تطبيقي قصير (سنتان Bac+2) للاندماج السريع أو الولوج الموازي",
+      "tags": ["تقني متخصص", "تطبيقي", "اندماج سريع"],
+      "eligibility": {
+        "filiereAllowed": ["SMA", "SMB", "SP", "SVT", "STE", "STM", "SE", "TGC", "LET", "ART", "PRO"]
+      },
+      "schools": [
+        {"name": "EST — المدارس العليا للتكنولوجيا (شبكة وطنية)", "city": "مدن متعددة", "majors": ["صناعة ميكانيكية", "كهرباء صناعية", "شبكات وأنظمة", "صيانة", "جودة"], "note": "Diplôme DUT"},
+        {"name": "BTS — مراكز شهادة التقني العالي", "city": "مدن متعددة", "majors": ["محاسبة", "إلكترونيك", "صيانة ميكانيكية", "معلوميات مكتبية"], "note": "ولوج عبر انتقاء و مباراة"}
+      ],
+      "faculties": []
+    },
+    "priv": {
+      "key": "priv",
+      "name": "جامعات خاصة/شبه عمومية",
+      "badge": "cat-it",
+      "note": "مسارات متميزة برسوم ومع منح محدودة، انتقاء وملف",
+      "tags": ["منح", "رسوم", "تعليم خاص"],
+      "eligibility": {
+        "filiereAllowed": ["SMA", "SMB", "SP", "SVT", "STE", "STM", "SE", "TGC", "LET", "ART", "PRO"]
+      },
+      "schools": [
+        {"name": "UM6P — جامعة محمد السادس متعددة التخصصات", "city": "بن جرير · الرباط", "majors": ["هندسة", "علوم البيانات", "طاقات"], "note": "منح انتقائية", "url": "https://www.um6p.ma/"},
+        {"name": "UIR — الجامعة الدولية بالرباط", "city": "الرباط", "majors": ["هندسة", "اتصالات", "تسيير"], "note": "رسوم ومنح", "url": "https://www.uir.ac.ma/"},
+        {"name": "AUI — جامعة الأخوين", "city": "إفران", "majors": ["Computer Science", "Engineering & Management"], "note": "رسوم ومنح", "url": "https://www.aui.ma/"},
+        {"name": "UIC — الجامعة الدولية بالدار البيضاء", "city": "الدار البيضاء", "majors": ["هندسة", "تسيير", "علوم صحية"], "note": "رسوم ومنح", "url": "https://www.uic.ac.ma/"},
+        {"name": "UPF — الجامعة الخاصة بفاس", "city": "فاس", "majors": ["هندسة", "تسيير", "صحة"], "note": "رسوم ومنح", "url": "https://www.upf.ac.ma/"},
+        {"name": "UIZ — جامعة ابن زهر (عمومية)", "city": "أكادير", "majors": ["علوم", "تقنيات", "اقتصاد"], "note": "جامعة عمومية جهوية", "url": "https://www.uiz.ac.ma/"}
+      ],
+      "faculties": []
+    }
+  }
+}
