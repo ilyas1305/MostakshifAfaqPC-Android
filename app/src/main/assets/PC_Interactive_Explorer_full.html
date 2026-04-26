@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>مستكشف الآفاق — الثانية بكالوريا علوم فيزيائية</title>
+<style>
+@font-face {
+  font-family: 'Cairo';
+  src: url('file:///android_asset/fonts/Cairo-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Cairo';
+  src: url('file:///android_asset/fonts/Cairo-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Cairo';
+  src: url('file:///android_asset/fonts/Cairo-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Cairo';
+  src: url('file:///android_asset/fonts/Cairo-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Cairo';
+  src: url('file:///android_asset/fonts/Cairo-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; font-family: 'Cairo', system-ui, -apple-system, Segoe UI, Arial, sans-serif; background:#0f172a; color:#e2e8f0; }
+.container { max-width: 1100px; margin: 0 auto; padding: 16px; }
+.header { background: linear-gradient(135deg,#1e3a5f,#2c5282); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 18px; margin-bottom: 14px; position: relative; overflow: hidden; }
+.header h1 { margin: 0 0 6px; font-size: 24px; font-weight: 900; color:#fff; }
+.header p { margin: 4px 0 0; color:#cbd5e1; font-weight:600; }
+.badge { display:inline-block; background:#e2b93b; color:#1e3a5f; font-weight:900; font-size:12px; padding:6px 14px; border-radius:20px; margin-bottom:8px; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 900px){ .grid{ grid-template-columns: 1fr; } }
+.card { background:#0b1220; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 14px; }
+.card h2 { margin: 0 0 10px; font-size: 18px; font-weight: 900; color:#e2b93b; }
+.card h3 { margin: 10px 0 8px; font-size: 15px; font-weight: 800; color:#93c5fd; }
+.help { color:#94a3b8; font-size: 13px; margin-top: 6px; }
+.btns { display:flex; gap:10px; flex-wrap:wrap; margin-top: 12px; }
+.btn { appearance: none; border: 0; padding: 9px 12px; border-radius: 10px; font-weight: 800; cursor: pointer; }
+.btn-primary { background:#e2b93b; color:#1e3a5f; }
+.btn-outline { background:transparent; color:#e2e8f0; border:1px solid rgba(255,255,255,0.25); }
+
+/* Quiz */
+.quiz-list { display:grid; grid-template-columns: 1fr; gap: 10px; margin-top: 8px; }
+.quiz-item { display:flex; align-items:flex-start; gap:10px; padding:10px; border:1px dashed rgba(255,255,255,0.15); border-radius:10px; background: rgba(226,185,59,0.05); }
+.quiz-item input { margin-top: 4px; transform: scale(1.2); }
+.quiz-item label { font-weight:700; color:#e2e8f0; }
+
+/* Results */
+.hidden { display:none; }
+.kpis { display:grid; grid-template-columns: repeat(3,1fr); gap:10px; margin-top: 8px; }
+.kpi { background:#0b1220; border:1px solid rgba(255,255,255,0.08); padding:10px; border-radius:10px; text-align:center; }
+.kpi .v { font-size: 18px; font-weight: 900; color:#e2b93b; }
+.kpi .t { font-size: 12px; color:#94a3b8; font-weight:700; }
+
+.badge-cat { display:inline-block; padding:4px 10px; border-radius:999px; font-size:12px; font-weight:900; margin: 0 0 8px 8px; }
+.cat-cpge { background:#1e3a5f; color:#e2b93b; }
+.cat-eng { background:#0d9488; color:#fff; }
+.cat-it  { background:#7c3aed; color:#fff; }
+.cat-med { background:#dc2626; color:#fff; }
+.cat-fst { background:#16a34a; color:#fff; }
+.cat-bus { background:#f59e0b; color:#1e293b; }
+
+.bar { height:10px; border-radius: 999px; background: rgba(255,255,255,0.08); overflow:hidden; }
+.bar > span { display:block; height:100%; background: linear-gradient(90deg,#e2b93b,#fca311); }
+
+.pathway { border:1px solid rgba(255,255,255,0.12); border-radius:12px; margin-top: 12px; overflow: hidden; }
+.pathway-header { display:flex; align-items:center; gap:10px; background: rgba(255,255,255,0.04); padding:10px 12px; cursor: pointer; }
+.pathway-header h3 { margin:0; font-size: 15px; font-weight:900; color:#fff; }
+.pathway-body { padding: 12px; display:none; }
+.meta { display:flex; gap: 8px; flex-wrap:wrap; margin-top:8px; }
+.meta .tag { font-size: 12px; font-weight:800; padding:4px 8px; border-radius: 999px; border:1px solid rgba(255,255,255,0.2); color:#cbd5e1; }
+.schools { display:grid; grid-template-columns: 1fr; gap: 10px; margin-top: 10px; }
+.school { border:1px solid rgba(255,255,255,0.12); border-radius:10px; padding:10px; background:#091124; }
+.school h4 { margin:0 0 6px; font-size: 14px; font-weight:800; color:#93c5fd; }
+.school ul { margin:6px 0 0; padding-right: 18px; color:#cbd5e1; }
+.small { font-size: 12px; color:#94a3b8; }
+.footer { text-align:center; color:#94a3b8; font-size: 12px; margin-top: 18px; }
+.link { color:#93c5fd; text-decoration: underline; }
+
+/* Print styling */
+@media print {
+  html, body { background:#fff !important; color:#000 !important; }
+  .header { background:#fff !important; border-color:#000 !important; }
+  .header h1 { color:#000 !important; }
+  .badge { background:#000 !important; color:#fff !important; }
+  .card { background:#fff !important; color:#000 !important; border:1px solid #000 !important; }
+  .help, .small { color:#000 !important; }
+  .btns, #quiz-card .quiz-list, #quiz-card .adv, #btn-reset { display:none !important; }
+  .pathway-body { display:block !important; }
+  .badge-cat { border:1px solid #000 !important; }
+  .schools .school { background:#fff !important; border-color:#000 !important; }
+  .bar { background:#eee !important; }
+  .bar > span { background:#000 !important; }
+  a.link { color:#000 !important; text-decoration: underline !important; }
+}
+
+/* Mobile tweaks */
+@media (max-width: 600px){
+  .container { padding: 12px; }
+  .header h1 { font-size: 20px; }
+  .header p { font-size: 13px; }
+  .btn { padding: 8px 10px; }
+  .kpi .v { font-size: 16px; }
+  .kpi .t { font-size: 11px; }
+}
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="badge">دليل التوجيه — 2026</div>
+      <h1>مستكشف الآفاق لتلاميذ الثانية بكالوريا علوم فيزيائية (PC)</h1>
+      <p>أجب عن أسئلة الميولات المهنية، ثم اكتشف المدارس والمعاهد والتخصصات المناسبة لك.</p>
+    </div>
+
+    <div class="grid">
+      <!-- Quiz -->
+      <div class="card" id="quiz-card">
+        <h2>1) اختبار الميولات المهنية</h2>
+        <p class="help">اختر العبارات التي تُشبهك. يمكنك اختيار أكثر من عبارة.</p>
+        <div class="quiz-list" id="quiz-list">
+          <!-- Filled by JS -->
+        </div>
+        <div class="adv" style="margin-top:12px; border-top:1px dashed rgba(255,255,255,0.2); padding-top:12px;">
+          <h3>ترجيح إضافي (اختياري)</h3>
+          <div class="grid" style="gap:10px; margin-top:6px;">
+            <div class="card" style="padding:12px;">
+              <h3>اللغات</h3>
+              <div class="grid" style="grid-template-columns:1fr 1fr; gap:10px;">
+                <label>الفرنسية
+                  <select id="sel-fr" style="width:100%; padding:8px; border-radius:8px; background:#0b1220; color:#e2e8f0; border:1px solid rgba(255,255,255,0.2);">
+                    <option value="">—</option>
+                    <option value="strong">قوية</option>
+                    <option value="medium">متوسطة</option>
+                    <option value="weak">ضعيفة</option>
+                  </select>
+                </label>
+                <label>الإنجليزية
+                  <select id="sel-en" style="width:100%; padding:8px; border-radius:8px; background:#0b1220; color:#e2e8f0; border:1px solid rgba(255,255,255,0.2);">
+                    <option value="">—</option>
+                    <option value="strong">قوية</option>
+                    <option value="medium">متوسطة</option>
+                    <option value="weak">ضعيفة</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+            <div class="card" style="padding:12px;">
+              <h3>المعدل العام (0–20)</h3>
+              <input id="inp-gpa" type="number" min="0" max="20" step="0.1" placeholder="مثال: 15.5" style="width:100%; padding:8px; border-radius:8px; background:#0b1220; color:#e2e8f0; border:1px solid rgba(255,255,255,0.2);">
+              <div class="help">يُستخدم لتقريب الملاءمة لمسارات انتقائية (CPGE/FMP)</div>
+            </div>
+            <div class="card" style="padding:12px; grid-column:1 / -1;">
+              <h3>التخصصات/المواد المفضلة</h3>
+              <div class="quiz-list" style="grid-template-columns: repeat(3,1fr);">
+                <label class="quiz-item" style="display:flex;align-items:center;"><input type="checkbox" id="fav-physics" style="margin:0 8px 0 0"><span>فيزياء</span></label>
+                <label class="quiz-item" style="display:flex;align-items:center;"><input type="checkbox" id="fav-math" style="margin:0 8px 0 0"><span>رياضيات</span></label>
+                <label class="quiz-item" style="display:flex;align-items:center;"><input type="checkbox" id="fav-chem" style="margin:0 8px 0 0"><span>كيمياء</span></label>
+                <label class="quiz-item" style="display:flex;align-items:center;"><input type="checkbox" id="fav-bio" style="margin:0 8px 0 0"><span>أحياء</span></label>
+                <label class="quiz-item" style="display:flex;align-items:center;"><input type="checkbox" id="fav-cs" style="margin:0 8px 0 0"><span>معلوميات</span></label>
+                <label class="quiz-item" style="display:flex;align-items:center;"><input type="checkbox" id="fav-econ" style="margin:0 8px 0 0"><span>اقتصاد/تسيير</span></label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="btns">
+          <button class="btn btn-primary" id="btn-run">أظهر التوصيات</button>
+          <button class="btn btn-outline" id="btn-reset">إعادة الاختبار</button>
+          <button class="btn btn-outline" id="btn-print">تصدير النتائج إلى PDF</button>
+        </div>
+      </div>
+
+      <!-- Results -->
+      <div class="card" id="results-card">
+        <h2>2) نتائجك</h2>
+        <div id="results-empty" class="help">نتائجك ستظهر هنا بعد إتمام الاختبار.</div>
+        <div id="results" class="hidden">
+          <div class="kpis">
+            <div class="kpi"><div class="v" id="kpi-top1">—</div><div class="t">المسار الأول</div></div>
+            <div class="kpi"><div class="v" id="kpi-top2">—</div><div class="t">المسار الثاني</div></div>
+            <div class="kpi"><div class="v" id="kpi-top3">—</div><div class="t">المسار الثالث</div></div>
+          </div>
+          <div id="bars" style="margin-top:12px"></div>
+          <div class="btns" style="margin-top:12px;align-items:center;gap:8px;flex-wrap:nowrap">
+            <label for="city-filter" class="small" style="min-width:140px">مرشح المدينة/الجهة:</label>
+            <input id="city-filter" type="text" placeholder="مثال: الرباط، الدار البيضاء، فاس..." style="flex:1; padding:9px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); background:#0b1220; color:#e2e8f0;">
+            <button class="btn btn-outline" id="btn-apply-filter">تطبيق المرشح</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pathways List -->
+    <div class="card" style="margin-top:16px">
+      <h2>3) المدارس و المعاهد و الكليات المقترحة</h2>
+      <p class="help">اضغط على كل مسار لعرض المدارس، المعاهد، الكليات، المدن، والتخصصات المقترحة.</p>
+      <div id="pathways"></div>
+    </div>
+
+    <div class="footer">© 2026 · مستكشف الآفاق — علوم فيزيائية · <span class="small">هذه صفحة تفاعلية تعليمية</span></div>
+  </div>
+
+<script>
+// ====== Data ======
+const CATS = {
+  cpge: { key:'cpge', name:'الأقسام التحضيرية للمدارس العليا (CPGE)', badge:'cat-cpge', note:'مسار مكثف لسنتين (MP/PSI) للولوج لأفضل مدارس المهندسين', tags:['وتيرة عالية','رياضيات قوية','فرنسية'], schools:[
+    { name:'مراكز CPGE العمومية', city:'متعددة', majors:['MPSI/PCSI ثم MP/PSI'], note:'ولوج مدارس المهندسين المغربية والفرنسية بعد السنتين' }
+  ], faculties:[] },
+  eng: { key:'eng', name:'المدارس العليا للمهندسين', badge:'cat-eng', note:'ولوج مباشر بعد الباك أو بعد CPGE/DUT/DEUG', tags:['هندسة مدنية','كهرباء/إلكترونيك','طاقة/ماء'], schools:[
+    { name:'EMI — المدرسة المحمدية للمهندسين', city:'الرباط', majors:['ميكانيك','كهرباء','معلوميات'], note:'Concours وعتبة عالية', url:'https://www.emi.ac.ma/' },
+    { name:'EHTP — المدرسة الحسنية للأشغال العمومية', city:'الدار البيضاء', majors:['مدني','ماء','بيئة'], note:'Concours وملف', url:'https://www.ehtp.ac.ma/' },
+    { name:'ENSAM', city:'الدار البيضاء · مكناس', majors:['صناعة ميكانيكية','إلكترونيك'], note:'مسار 5 سنوات', url:'https://www.ensam-casa.ma/' },
+    { name:'ENSA (شبكة وطنية)', city:'مدن متعددة', majors:['حاسبات','شبكات','طاقة','مدني'], note:'ولوج مباشر + مسالك متنوعة' },
+    { name:'ENSMR — المدرسة الوطنية العليا للمناجم', city:'الرباط', majors:['معادن ومواد','طاقات','جيوتقنية'], note:'انتقائي', url:'https://www.ensmr.ac.ma/' }
+  ], faculties:[] },
+  it: { key:'it', name:'المعلوميات و الذكاء الاصطناعي و البيانات', badge:'cat-it', note:'مسارات تقنية سريعة النمو وسوق شغل قوي', tags:['برمجة','ذكاء اصطناعي','أمن سيبراني'], schools:[
+    { name:'ENSIAS', city:'الرباط', majors:['ذكاء اصطناعي','هندسة برمجيات','أمن'], note:'', url:'https://ensias.um5.ac.ma/' },
+    { name:'INPT', city:'الرباط', majors:['شبكات','اتصالات','أمن'], note:'', url:'https://www.inpt.ac.ma/' },
+    { name:'INSEA', city:'الرباط', majors:['إحصاء','بيانات','اقتصاد قياسي'], note:'', url:'https://www.insea.ac.ma/' },
+    { name:'ENSA (شبكة وطنية)', city:'مدن متعددة', majors:['Informatique','Réseaux','Data'], note:'' }
+  ], faculties:[
+    { name:'FST — كليات العلوم والتقنيات', city:'مدن متعددة', majors:['Informatique','Réseaux','Data Science'], note:'LMD' },
+    { name:'FS — كليات العلوم', city:'مدن متعددة', majors:['Informatique','Math-Info'], note:'LMD' }
+  ] },
+  med: { key:'med', name:'كليات الطب والصيدلة وطب الأسنان (FMP)', badge:'cat-med', note:'مسار طويل وانتقائي يتطلب معدل مرتفع', tags:['7 سنوات','فرنسية','ضغط عالٍ'], schools:[], faculties:[
+    { name:'FMP — الطب العام', city:'الرباط · الدار البيضاء · مراكش · فاس · وجدة · طنجة · أكادير', majors:['طب عام ثم تخصصات'], note:'' },
+    { name:'الصيدلة', city:'مدن مختارة', majors:['صناعة دوائية','صيدلة إكلينيكية'], note:'' },
+    { name:'طب الأسنان', city:'الرباط · الدار البيضاء · فاس · وجدة · مراكش', majors:['جراحة الفم','تقويم','ترميم'], note:'' }
+  ] },
+  fst: { key:'fst', name:'علوم أساسية وتطبيقية (FST/FS) — LMD', badge:'cat-fst', note:'Licence ثم Master/Doctorat أو إدماج في الصناعة', tags:['بحث علمي','مختبر','تدريس'], schools:[], faculties:[
+    { name:'FSTM — FST المحمدية', city:'المحمدية', majors:['فيزياء','كيمياء','رياضيات','علوم المادة','علوم الأرض','طاقات متجددة'], note:'', url:'https://www.fstm.ac.ma/' },
+    { name:'FSTG — FST مراكش', city:'مراكش', majors:['فيزياء','كيمياء','رياضيات','علوم المهندس'], note:'', url:'https://www.fstg-marrakech.ac.ma/' },
+    { name:'FSTT — FST طنجة', city:'طنجة', majors:['فيزياء','كيمياء','رياضيات','معلوميات'], note:'', url:'https://www.fstt.ac.ma/' },
+    { name:'FSTS — FST سطات', city:'سطات', majors:['فيزياء','كيمياء','رياضيات','مهن العلوم'], note:'', url:'https://www.fsts.ac.ma/' },
+    { name:'FSTBM — FST بني ملال', city:'بني ملال', majors:['فيزياء','كيمياء','رياضيات','بيئة'], note:'', url:'https://www.fstbm.ac.ma/' },
+    { name:'FS (كليات العلوم)', city:'مدن متعددة', majors:['فيزياء تطبيقية','كيمياء تحليلية','رياضيات تطبيقية','علوم الجينوم','جيولوجيا'], note:'' }
+  ] },
+  bus: { key:'bus', name:'التسيير والتجارة (ENCG/ISCAE)', badge:'cat-bus', note:'ولوج عبر Concours بعد الباك، مفتوح لمسالك علمية', tags:['تسيير','محاسبة','تسويق'], schools:[
+    { name:'ENCG (شبكة وطنية)', city:'مدن متعددة', majors:['تدبير','مالية','تسويق','تجارة'], note:'' },
+    { name:'ISCAE', city:'الدار البيضاء · الرباط', majors:['تسيير','مالية','تدقيق'], note:'', url:'https://www.iscae.ma/' }
+  ], faculties:[
+    { name:'FSJES — كليات الحقوق والاقتصاد', city:'مدن متعددة', majors:['اقتصاد','تدبير','مالية','تحليل بيانات الأعمال'], note:'LMD' }
+  ] },
+  short: { key:'short', name:'مسارات قصيرة (BTS / DUT / EST)', badge:'cat-fst', note:'تكوين تطبيقي قصير (سنتان Bac+2) للاندماج السريع أو الولوج الموازي', tags:['تقني متخصص','تطبيقي','اندماج سريع'], schools:[
+    { name:'EST — المدارس العليا للتكنولوجيا (شبكة وطنية)', city:'مدن متعددة', majors:['صناعة ميكانيكية','كهرباء صناعية','شبكات وأنظمة','صيانة','جودة'], note:'Diplôme DUT' },
+    { name:'BTS — مراكز شهادة التقني العالي', city:'مدن متعددة', majors:['محاسبة','إلكترونيك','صيانة ميكانيكية','معلوميات مكتبية'], note:'ولوج عبر انتقاء و مباراة' },
+  ], faculties:[] },
+  priv: { key:'priv', name:'جامعات خاصة/شبه عمومية', badge:'cat-it', note:'مسارات متميزة برسوم ومع منح محدودة، انتقاء وملف', tags:['منح','رسوم','تعليم خاص'], schools:[
+    { name:'UM6P — جامعة محمد السادس متعددة التخصصات', city:'بن جرير · الرباط', majors:['هندسة','علوم البيانات','طاقات'], note:'منح انتقائية', url:'https://www.um6p.ma/' },
+    { name:'UIR — الجامعة الدولية بالرباط', city:'الرباط', majors:['هندسة','اتصالات','تسيير'], note:'رسوم ومنح', url:'https://www.uir.ac.ma/' },
+    { name:'AUI — جامعة الأخوين', city:'إفران', majors:['Computer Science','Engineering & Management'], note:'رسوم ومنح', url:'https://www.aui.ma/' },
+    { name:'UIC — الجامعة الدولية بالدار البيضاء', city:'الدار البيضاء', majors:['هندسة','تسيير','علوم صحية'], note:'رسوم ومنح', url:'https://www.uic.ac.ma/' },
+    { name:'UPF — الجامعة الخاصة بفاس', city:'فاس', majors:['هندسة','تسيير','صحة'], note:'رسوم ومنح', url:'https://www.upf.ac.ma/' },
+    { name:'UIZ — جامعة ابن زهر (عمومية)', city:'أكادير', majors:['علوم','تقنيات','اقتصاد'], note:'جامعة عمومية جهوية', url:'https://www.uiz.ac.ma/' }
+  ], faculties:[] }
+};
+
+const QUIZ = [
+  { id:'q1', text:'أحب حل المسائل الرياضية المعقدة.', add:['cpge','eng','it','fst'] },
+  { id:'q2', text:'أستمتع ببناء الدوائر الإلكترونية أو الروبوتات.', add:['eng','it'] },
+  { id:'q3', text:'أحب البرمجة وتصميم التطبيقات.', add:['it'] },
+  { id:'q4', text:'أفضل العمل المخبري والتجارب العلمية.', add:['fst','med'] },
+  { id:'q5', text:'أرغب في دراسة الطب أو الصيدلة.', add:['med'] },
+  { id:'q6', text:'أميل للهندسة المدنية والبنية التحتية.', add:['eng'] },
+  { id:'q7', text:'أحب التحليل الإحصائي والبيانات.', add:['it','bus','fst'] },
+  { id:'q8', text:'أفضل التسيير والاقتصاد وإدارة الأعمال.', add:['bus'] },
+  { id:'q9', text:'لدي انضباط عالٍ وأتحمل ضغط الدراسة المكثفة.', add:['cpge','med'] },
+  { id:'q10', text:'أهتم بالطاقة والبيئة والموارد المائية.', add:['eng','fst'] },
+  { id:'q11', text:'أحب البحث العلمي والنظريات الفيزيائية.', add:['fst','cpge'] },
+  { id:'q12', text:'أفضل مسار سريع وعملي نحو سوق الشغل.', add:['it','eng','bus'] },
+  { id:'q13', text:'أهتم بعلوم المواد والنانو تكنولوجي.', add:['eng','fst'] },
+  { id:'q14', text:'أستمتع بالمسابقات الخوارزمية والبرمجة.', add:['it','cpge'] },
+  { id:'q15', text:'أميل للتخصصات الصحية والهندسة الطبية الحيوية.', add:['med','eng'] },
+  { id:'q16', text:'أفضل العمل الميداني (جيولوجيا/بيئة) إلى جانب المختبر.', add:['fst','eng'] },
+  { id:'q17', text:'أتقن الفرنسية والإنجليزية للدراسة الجامعية.', add:['cpge','med','eng','it'] },
+  { id:'q18', text:'أرغب في دمج التقنية مع ريادة الأعمال والتسيير.', add:['bus','it','eng'] },
+  { id:'q19', text:'مهتم بالطاقة المتجددة والاستدامة.', add:['eng','fst'] },
+  { id:'q20', text:'أفضل مسارا أكاديميا (Licence → Master → Doctorat).', add:['fst'] }
+];
+
+// ====== UI Build ======
+function buildQuiz(){
+  const list = document.getElementById('quiz-list');
+  list.innerHTML = '';
+  QUIZ.forEach(q => {
+    const id = 'chk_'+q.id;
+    const wrap = document.createElement('div');
+    wrap.className = 'quiz-item';
+    wrap.innerHTML = `<input type="checkbox" id="${id}" data-add="${q.add.join(',')}">`+
+      `<label for="${id}">${q.text}</label>`;
+    list.appendChild(wrap);
+  });
+}
+
+function compute(){
+  const weights = { cpge:0, eng:0, it:0, med:0, fst:0, bus:0 };
+  document.querySelectorAll('#quiz-list input[type=checkbox]:checked').forEach(chk => {
+    const adds = (chk.getAttribute('data-add')||'').split(',').filter(Boolean);
+    adds.forEach(k => weights[k] += 1);
+  });
+  // Advanced weighting
+  const fr = (document.getElementById('sel-fr')?.value)||'';
+  const en = (document.getElementById('sel-en')?.value)||'';
+  const gpa = parseFloat((document.getElementById('inp-gpa')?.value)||'');
+  const fav = {
+    physics: !!document.getElementById('fav-physics')?.checked,
+    math: !!document.getElementById('fav-math')?.checked,
+    chem: !!document.getElementById('fav-chem')?.checked,
+    bio: !!document.getElementById('fav-bio')?.checked,
+    cs: !!document.getElementById('fav-cs')?.checked,
+    econ: !!document.getElementById('fav-econ')?.checked,
+  };
+
+  // Language influence
+  if(fr==='strong'){ weights.cpge+=2; weights.med+=2; weights.eng+=1; weights.it+=1; weights.fst+=1; }
+  else if(fr==='medium'){ weights.cpge+=1; weights.med+=1; }
+  else if(fr==='weak'){ weights.cpge=Math.max(0,weights.cpge-1); weights.med=Math.max(0,weights.med-1); }
+
+  if(en==='strong'){ weights.it+=1; weights.eng+=1; weights.bus+=1; }
+  else if(en==='medium'){ weights.it+=1; }
+
+  // GPA influence (0-20)
+  if(!isNaN(gpa)){
+    if(gpa>=16){ weights.cpge+=2; weights.med+=2; weights.eng+=1; }
+    else if(gpa>=14){ weights.cpge+=1; weights.eng+=1; weights.it+=1; }
+    else if(gpa>=12){ weights.it+=1; weights.bus+=1; }
+    else { weights.short = (weights.short||0)+2; weights.fst+=1; }
+  }
+
+  // Favorites influence
+  if(fav.physics){ weights.cpge+=1; weights.eng+=1; weights.fst+=1; }
+  if(fav.math){ weights.cpge+=1; weights.it+=1; weights.eng+=1; weights.fst+=1; }
+  if(fav.chem){ weights.fst+=1; weights.med+=1; }
+  if(fav.bio){ weights.med+=1; weights.fst+=1; }
+  if(fav.cs){ weights.it+=2; weights.eng+=1; }
+  if(fav.econ){ weights.bus+=2; }
+  return weights;
+}
+
+function pct(v, max){ return max? Math.round((v/max)*100) : 0; }
+
+function renderResults(weights){
+  const vals = Object.entries(weights);
+  const maxv = Math.max(1, ...vals.map(v=>v[1]));
+  const sorted = vals.sort((a,b)=>b[1]-a[1]);
+  // KPIs
+  const t1 = CATS[sorted[0][0]].name; const t2 = CATS[sorted[1][0]].name; const t3 = CATS[sorted[2][0]].name;
+  document.getElementById('kpi-top1').textContent = t1;
+  document.getElementById('kpi-top2').textContent = t2;
+  document.getElementById('kpi-top3').textContent = t3;
+  document.getElementById('results-empty').classList.add('hidden');
+  document.getElementById('results').classList.remove('hidden');
+  // Bars
+  const bars = document.getElementById('bars');
+  bars.innerHTML = '';
+  sorted.forEach(([k,v])=>{
+    const cat = CATS[k];
+    const row = document.createElement('div');
+    row.style.margin = '8px 0';
+    row.innerHTML = `<div style="display:flex;align-items:center;gap:8px;">
+      <span class="badge-cat ${cat.badge}">${cat.name}</span>
+      <span class="small">${v} / ${maxv}</span>
+    </div>
+    <div class="bar" aria-hidden="true"><span style="width:${pct(v,maxv)}%"></span></div>`;
+    bars.appendChild(row);
+  });
+}
+
+function toggleBody(el){ const b = el.nextElementSibling; b.style.display = (b.style.display==='block'?'none':'block'); }
+
+function renderPathways(weights){
+  const host = document.getElementById('pathways');
+  host.innerHTML = '';
+  const sortedKeys = Object.keys(weights).sort((a,b)=>weights[b]-weights[a]);
+  sortedKeys.forEach(key => {
+    const cat = CATS[key];
+    const sec = document.createElement('section');
+    sec.className = 'pathway';
+    // Build schools section
+    const cf = (document.getElementById('city-filter')?.value || '').trim();
+    const cityMatch = (city) => {
+      if(!cf) return true;
+      if((city||'').includes('متعددة')) return true;
+      return (city||'').toLowerCase().includes(cf.toLowerCase());
+    };
+    const schoolsList = (cat.schools||[]).filter(s=>cityMatch(s.city));
+    const schoolsHTML = (schoolsList.length)
+      ? `<h3 style="margin-top:10px">المدارس و المعاهد</h3>
+         <div class="schools">
+           ${schoolsList.map(s=>`<div class=\"school\">`+
+             `<h4>${s.name} <span class=\"small\">— ${s.city}</span> ${s.url?`· <a class=\"link\" href=\"${s.url}\" target=\"_blank\" rel=\"noopener\">رابط رسمي</a>`:''}</h4>`+
+             `<div class=\"small\">تخصصات بارزة:</div>`+
+             `<ul>${s.majors.map(m=>`<li>${m}</li>`).join('')}</ul>`+
+             `${s.note?`<div class=\"small\" style=\"margin-top:6px;opacity:.8\">${s.note}</div>`:''}`+
+           `</div>`).join('')}
+         </div>` : '';
+    // Build faculties section
+    const facList = (cat.faculties||[]).filter(s=>cityMatch(s.city));
+    const facHTML = (facList.length)
+      ? `<h3 style="margin-top:14px">الكليات (LMD)</h3>
+         <div class="schools">
+           ${facList.map(s=>`<div class=\"school\">`+
+             `<h4>${s.name} <span class=\"small\">— ${s.city}</span> ${s.url?`· <a class=\"link\" href=\"${s.url}\" target=\"_blank\" rel=\"noopener\">رابط رسمي</a>`:''}</h4>`+
+             `<div class=\"small\">تخصصات بارزة:</div>`+
+             `<ul>${s.majors.map(m=>`<li>${m}</li>`).join('')}</ul>`+
+             `${s.note?`<div class=\"small\" style=\"margin-top:6px;opacity:.8\">${s.note}</div>`:''}`+
+           `</div>`).join('')}
+         </div>` : '';
+    sec.innerHTML = `
+      <div class="pathway-header" onclick="toggleBody(this)">
+        <span class="badge-cat ${cat.badge}">${cat.name}</span>
+        <h3>${cat.note}</h3>
+      </div>
+      <div class="pathway-body">
+        <div class="meta">
+          ${cat.tags.map(t=>`<span class="tag">${t}</span>`).join('')}
+        </div>
+        ${schoolsHTML}
+        ${facHTML}
+      </div>`;
+    host.appendChild(sec);
+  });
+}
+
+// ====== Events ======
+buildQuiz();
+let LAST_WEIGHTS = null;
+
+document.getElementById('btn-run').addEventListener('click', ()=>{
+  const w = compute();
+  LAST_WEIGHTS = w;
+  renderResults(w);
+  renderPathways(w);
+});
+
+document.getElementById('btn-reset').addEventListener('click', ()=>{
+  document.querySelectorAll('#quiz-list input[type=checkbox]').forEach(chk => chk.checked=false);
+  document.getElementById('results').classList.add('hidden');
+  document.getElementById('results-empty').classList.remove('hidden');
+  document.getElementById('pathways').innerHTML = '';
+  const cf = document.getElementById('city-filter'); if(cf) cf.value = '';
+  LAST_WEIGHTS = null;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+document.getElementById('btn-print').addEventListener('click', ()=> window.print());
+
+// Filter controls
+document.getElementById('btn-apply-filter').addEventListener('click', ()=>{
+  if(!LAST_WEIGHTS) LAST_WEIGHTS = compute();
+  renderPathways(LAST_WEIGHTS);
+});
+document.getElementById('city-filter').addEventListener('keyup', (e)=>{
+  if(e.key === 'Enter'){
+    if(!LAST_WEIGHTS) LAST_WEIGHTS = compute();
+    renderPathways(LAST_WEIGHTS);
+  }
+});
+</script>
+</body>
+</html>
